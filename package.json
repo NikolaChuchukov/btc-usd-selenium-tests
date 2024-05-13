@@ -1,0 +1,36 @@
+{
+
+  "name": "btc-usd-selenium-test",
+
+  "version": "1.0.0",
+
+  "description": "",
+
+  "main": "index.js",
+
+  "scripts": {
+
+    "test": "cucumber-js"
+
+  },
+
+  "author": "",
+
+  "license": "ISC",
+
+  "dependencies": {
+
+    "@cucumber/cucumber": "^10.7.0",
+
+    "chai": "^5.1.0",
+
+    "chai-as-promised": "^7.1.1",
+
+    "cucumber": "^6.0.7",
+
+    "selenium-webdriver": "^4.11.1"
+
+  }
+
+}
+
