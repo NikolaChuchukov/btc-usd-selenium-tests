@@ -22,7 +22,10 @@ When(
   { timeout: 600 * 1000 },
   async function (seconds, minutes) {
     btcPrices = await Helper.checkBitcoinPrice(seconds, minutes);
-    console.log("Prices for the interval of " + minutes + " minutes are ", btcPrices);
+    console.log(
+      "Prices for the interval of " + minutes + " minutes are ",
+      btcPrices
+    );
   }
 );
 
@@ -34,12 +37,17 @@ Then(
     console.log("Avg price is ", avgPrice);
     percentageDiff = Helper.calculatePercentage(initialPrice, avgPrice);
     console.log("Percentage diff is ", percentageDiff);
-    if( percentageDiff >= percent && percentageDiff <= -percent){ 
-      throw new Error("Percentage difference for the time period of " + minutes + " minutes is more than " + percent + "%");
+    if (percentageDiff >= percent && percentageDiff <= -percent) {
+      throw new Error(
+        "Percentage difference for the time period of " +
+          minutes +
+          " minutes is more than " +
+          percent +
+          "%"
+      );
     }
   }
-);  
-
+);
 
 Then(
   "Each price for {int} minutes does not vary by more than {int} percent",
@@ -51,11 +59,20 @@ Then(
         const value2 = btcPrices[j];
         percentageDiff = Helper.calculatePercentage(value1, value2);
         console.log("Percentage difference is ", percentageDiff);
-        if(percentageDiff >= percent && percentageDiff <= -percent){
-          throw new Error("Percentage difference for time period of " + minutes + " between price " + value1 +" and price " 
-          + value2 + " is more than " + percent+"%")
+        if (percentageDiff >= percent && percentageDiff <= -percent) {
+          throw new Error(
+            "Percentage difference for time period of " +
+              minutes +
+              " between price " +
+              value1 +
+              " and price " +
+              value2 +
+              " is more than " +
+              percent +
+              "%"
+          );
         }
       }
     }
-  }       
+  }
 );

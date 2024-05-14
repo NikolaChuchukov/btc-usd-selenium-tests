@@ -1,9 +1,9 @@
 const { Builder, By, Key, until } = require("selenium-webdriver");
 const { googleFinanceUrl } = require("./config");
-const fs = require('fs');
+const fs = require("fs");
 
 // Read the file containing identifiers
-const selectors = JSON.parse(fs.readFileSync('selectors.json', 'utf8'));
+const selectors = JSON.parse(fs.readFileSync("selectors.json", "utf8"));
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -23,19 +23,13 @@ class Helper {
 
       // Wait for the cookie banner to appear
       await driver.wait(
-        until.elementLocated(
-          By.xpath(
-            selectors.acceptCookies.xpath
-          )
-        ),
+        until.elementLocated(By.xpath(selectors.acceptCookies.xpath)),
         5000
       );
 
       // Find and click the "Accept" button
       const acceptButton = await driver.findElement(
-        By.xpath(
-            selectors.acceptCookies.xpath
-        )
+        By.xpath(selectors.acceptCookies.xpath)
       );
       await acceptButton.click();
 
@@ -44,33 +38,24 @@ class Helper {
 
       // Wait for the search input field to be visible
       await driver.wait(
-        until.elementLocated(
-          By.xpath(
-            selectors.inputField.xpath
-          )
-        ),
+        until.elementLocated(By.xpath(selectors.inputField.xpath)),
         5000
       );
 
       // Search for Bitcoin price
       await driver
-        .findElement(
-          By.xpath(
-            selectors.inputField.xpath
-          )
-        )
+        .findElement(By.xpath(selectors.inputField.xpath))
         .sendKeys("BTC-USD");
 
       await driver
-        .findElement(
-          By.xpath(
-            selectors.inputField.xpath
-          )
-        )
+        .findElement(By.xpath(selectors.inputField.xpath))
         .sendKeys(Key.ENTER);
 
       // Wait for Bitcoin price to appear
-      await driver.wait(until.elementLocated(By.css(selectors.bitcoinPriceField.css)), 5000);
+      await driver.wait(
+        until.elementLocated(By.css(selectors.bitcoinPriceField.css)),
+        5000
+      );
 
       // Get the Bitcoin price element
       const btcPriceElement = await driver.findElement(
@@ -131,19 +116,13 @@ class Helper {
 
       // Wait for the cookie banner to appear
       await driver.wait(
-        until.elementLocated(
-          By.xpath(
-            selectors.acceptCookies.xpath
-          )
-        ),
+        until.elementLocated(By.xpath(selectors.acceptCookies.xpath)),
         5000
       );
 
       // Find and click the "Accept" button
       const acceptButton = await driver.findElement(
-        By.xpath(
-            selectors.acceptCookies.xpath
-        )
+        By.xpath(selectors.acceptCookies.xpath)
       );
       await acceptButton.click();
 
@@ -152,32 +131,19 @@ class Helper {
 
       // Wait for the search input field to be visible
       await driver.wait(
-        until.elementLocated(
-          By.xpath(
-            selectors.inputField.xpath
-          )
-        ),
+        until.elementLocated(By.xpath(selectors.inputField.xpath)),
         5000
       );
 
       // Search for Bitcoin price
       await driver
-        .findElement(
-          By.xpath(
-            selectors.inputField.xpath
-          )
-        )
+        .findElement(By.xpath(selectors.inputField.xpath))
         .sendKeys("BTC-USD", Key.ENTER);
       await driver
-        .findElement(
-          By.xpath(
-            selectors.inputField.xpath
-          )
-        )
+        .findElement(By.xpath(selectors.inputField.xpath))
         .sendKeys(Key.ENTER);
 
       while (i < (minutes * 60) / seconds) {
-        await sleep(seconds * 1000);
         await driver.navigate().refresh();
         const priceElement = await driver.wait(
           until.elementLocated(By.css(selectors.bitcoinPriceField.css)),
@@ -187,7 +153,8 @@ class Helper {
         console.log(btcPriceNow.replace(/,/g, ""));
         let btcPriceInInt = parseInt(btcPriceNow.replace(/,/g, "", 10));
         btcPrices.push(btcPriceInInt);
-        i++;
+        i++;        
+        await sleep(seconds * 1000);
       }
 
       console.log("Bitcoin Prices:", btcPrices);
