@@ -144,7 +144,6 @@ class Helper {
         .sendKeys(Key.ENTER);
 
       while (i < (minutes * 60) / seconds) {
-        await driver.navigate().refresh();
         const priceElement = await driver.wait(
           until.elementLocated(By.css(selectors.bitcoinPriceField.css)),
           5000
@@ -154,7 +153,8 @@ class Helper {
         let btcPriceInInt = parseInt(btcPriceNow.replace(/,/g, "", 10));
         btcPrices.push(btcPriceInInt);
         i++;        
-        await sleep(seconds * 1000);
+        await sleep(seconds * 1000);        
+        await driver.navigate().refresh();
       }
 
       console.log("Bitcoin Prices:", btcPrices);
